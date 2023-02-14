@@ -1,7 +1,4 @@
-import './App.css';
 const App=()=>{
-  <>
-  <h1>saeed</h1>
-  </>
+<p>saeed</p>
 }
 export default App;
