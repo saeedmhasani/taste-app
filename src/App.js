@@ -6,9 +6,16 @@ import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { FoodContext } from "./context/foodContext";
 import { AddFood, FoodIndex, Navbar } from './components'
 
-import { Layout, Space } from 'antd';
+import { Layout,message } from 'antd';
 
 const { Header, Footer, Sider, Content } = Layout;
+const hederStyle={
+  textAlign:'center',
+  backgroundColor:'Azure',
+  display:'flex',
+  justifyContent:'space-between',
+  alignItems:'center'
+}
 
 
 
@@ -17,12 +24,14 @@ const App = () => {
   const test = JSON.parse(localStorage.getItem('foodsData'));
   const [foodsData, setFoodsData] = useState(test || [
     {
+      id:1,
       name: "polo",
       description: "lorem ipsonsdc asdvdsv dfbvdfsv sdvkmksdnv vcsdcvzdfv ncvknm nksdv 53sdfg.",
       contain: ["rice", "wather", "oil", "salt"],
       image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVMyhzwv2uPtYEdfoMZRXXOVdHevd0WXuN6A&usqp=CAU"
     },
     {
+      id:2,
       name: "gorme",
       description: "lorem ipsonsdc asdvdsv dfbvdfsv sdvkmksdnv vcsdcvzdfv ncvknm nksdv 53sdfg.",
       contain: ["rice", "wather", "oil", "salt"],
@@ -30,6 +39,7 @@ const App = () => {
 
     },
     {
+      id:3,
       name: "kabab",
       description: "lorem ipsonsdc asdvdsv dfbvdfsv sdvkmksdnv vcsdcvzdfv ncvknm nksdv 53sdfg.",
       contain: ["rice", "wather", "oil", "salt"],
@@ -43,6 +53,7 @@ const App = () => {
   const [food, setFood] = useState({});
   const [num, setNum] = useState();
   const navigate = useNavigate();
+  const [filteredFoods,setFilteredFoods]=useState();
 
   /** NOTE => مقدار foodsData را وارد localStorage میکند**/
   useEffect(() => {
@@ -62,6 +73,15 @@ const App = () => {
   const onFoodChange = (event) => {
     setFood({ ...food, [event.target.name]: event.target.value });
   }
+const removeFood=(e)=>{
+
+  const alldata=foodsData;
+const filter=alldata.filter(alldata=>alldata.name !== e);
+  setFilteredFoods(filter);
+  setFoodsData(filter);
+  message.success('Item Deleted');
+}
+
 
 
   return (
@@ -71,39 +91,27 @@ const App = () => {
       food,
       onFoodChange,
       createFoodForm,
+      removeFood,
     }}>
       <Layout>
-        <Sider></Sider>
+        <Sider style={{backgroundColor:'aqua'}}></Sider>
         <Layout>
-
-
           <div className="App">
-
-            <Header>
-
+            <Header style={hederStyle}>
               <Navbar />
             </Header>
             <Content>
-
               <Routes>
-
                 <Route path='/' element={<Navigate to='/foods' />} />
                 <Route path='/foods' element={<FoodIndex />} />
                 <Route path='/addfood' element={<AddFood />} />
-
               </Routes>
             </Content>
             <Footer></Footer>
           </div>
-
         </Layout>
       </Layout>
-
-
     </FoodContext.Provider>
-
-
-
   )
 }
 export default App;

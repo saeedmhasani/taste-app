@@ -8,5 +8,6 @@ export const FoodContext=createContext({
     food:{},
     onFoodChange:()=>{},
     createFoodForm:()=>{},
+    removeFood:()=>{},
 
 });

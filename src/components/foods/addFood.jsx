@@ -1,24 +1,13 @@
 import { useContext } from "react";
 import { FoodContext } from "../../context/foodContext";
-import { Form,Input,Button } from "antd";
+import { Form, Input, Button } from "antd";
 const AddFood = () => {
     const { food, foodsData, materialData, onFoodChange, createFoodForm } = useContext(FoodContext);
 
     return (<>
         <section>
-            <Form onSubmit={createFoodForm}>
-<Input
-name="name"
-type="text"
-value={food.name}
-onChange={onFoodChange}
-required={true}
-placeholder="food name"
-/>
-
-            </Form>
-            <form onSubmit={createFoodForm}>
-                <input
+            <Form onSubmit={createFoodForm} style={{maxWidth:"600px",margin:"25px"}} >
+                <Input
                     name="name"
                     type="text"
                     value={food.name}
@@ -26,7 +15,17 @@ placeholder="food name"
                     required={true}
                     placeholder="food name"
                 />
-                <input
+
+                {/* <form onSubmit={createFoodForm}> */}
+                <Input
+                    name="contain"
+                    type="text"
+                    value={food.contain}
+                    onChange={onFoodChange}
+                    required={true}
+                    placeholder="food contain"
+                />
+                <Input
                     name="description"
                     type="text"
                     value={food.description}
@@ -34,15 +33,21 @@ placeholder="food name"
                     required={true}
                     placeholder="description"
                 />
-                <Button type="primary" >
+                <Input
+                    name="image"
+                    type="text"
+                    value={food.image}
+                    onChange={onFoodChange}
+                    required={true}
+                    placeholder="image"
+                />
 
+                <Button type="primary" onClick={createFoodForm}>
 
-<input type="submit" 
-value="Create Food"
-/>
-</Button>
-
-            </form>
+create Food
+                </Button>
+            </Form>
+            {/* </form> */}
         </section>
     </>);
 

@@ -1,23 +1,51 @@
 import { useContext } from "react";
 import { FoodContext } from "../../context/foodContext";
-const FoodIndex = () => { 
-    const{foodsData}=useContext(FoodContext);
-return (
-    <div>
-        
-       { foodsData.map((e) => {
-            return (<>
-                <hr />
-                <input type={"text"} value={e.name}></input>
-                <input type={"text"} value={e.contain}></input>
-                <input type={"text"} value={e.description}></input>
-                <img src={e.image} width="300px" height={"300px"} alt={"food image"}></img>
-            </>)
-        })}
+import { Card, Popconfirm, message, Space } from "antd";
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+const { Meta } = Card;
+const FoodIndex = () => {
+    const { foodsData, removeFood } = useContext(FoodContext);
+    return (
+        <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto', gap: '20px', justifyContent: 'space-around' }}>
+            {foodsData.map((e) => {
 
-    </div>
-  
-)}
+                return (
+                    <>
+                        <Card
+                            style={{ width: '300px', cursor: "auto" }}
+                            cover={
+                                <img
+                                    alt="example"
+                                    src={e.image} />
+                            }
+                            actions={[
+                                <Space direction="horizontal"  >
+                                    <Popconfirm style={{ cursor: "none" }}
+                                        title="Delete the Item"
+                                        description="Are you sure to delete this Item?"
+                                        onConfirm={() =>
+                                            removeFood(e.name)}
+                                        onCancel={() => message.error('Item Delete Canceled.')}
+                                    >
+                                        <DeleteOutlined/>
+                                    </Popconfirm>
+                                    <EditOutlined />
+                                </Space>
+
+                            ]}
+                        >
+                            <Meta
+                                title={e.name}
+                                description={`${e.description}${e.contain}`}
+                            />
+                        </Card>
+                    </>
+                )
+            })
+            }
+        </div>
+
+    )
+}
 export default FoodIndex;
 
-  
